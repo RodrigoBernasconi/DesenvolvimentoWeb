@@ -1,0 +1,226 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    padding-bottom: 500px;
+}
+
+html {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.header {
+    color: lightcoral;
+    display: block;
+    text-align: center;
+    margin: 10px auto;
+    border-bottom: 2px solid lightcoral;
+    width: 320px;
+}
+
+.header-2 {
+    display: block;
+    text-align: center;
+    margin: 0px auto;
+}
+
+.header-base {
+    border-top: 1px solid black;
+    margin: 0 auto;
+    width: 50%;
+}
+
+/* Flex */
+.flex {
+    display: flex;
+    background-color: #ddd;
+    margin-bottom: 20px;
+}
+
+/* Column */
+.column-flex {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column; /* Altera o eixo primário do container */
+    background-color: #ddd;
+}
+
+/* Wrap */
+.wrap {
+    display: flex;
+    /* Permite a quebra de linha para comportar suas regras de tamanho */
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.box {
+    height: 40px;
+    width: 32%;
+    border: 1px solid red;
+    /* border-radius: 6px;
+    margin: 2px auto; */
+}
+
+/* Justify-content */
+.center {
+    display: flex;
+    margin-bottom: 20px;
+    justify-content: center;
+    border: 1px dashed lightcoral;
+}
+
+.center .box {
+    width: 50px;
+    margin: 4px;
+}
+
+.space-around, 
+.space-between, 
+.space-end {
+    display: flex;
+    margin-bottom: 20px;
+    justify-content: center;
+    border: 1px dashed lightcoral;
+}
+
+.space-around .box, 
+.space-between .box, 
+.space-end .box {
+    width: 50px;
+}
+
+.space-around {
+    justify-content: space-around;
+}
+
+.space-between {
+    justify-content: space-between;
+}
+
+.space-end {
+    justify-content: end;
+}
+
+/* Align itens */
+.align-center,
+.align-end,
+.align-stretch {
+    display: flex;
+    margin-bottom: 20px;
+    height: 200px;
+    border: 1px solid blue;
+}
+
+.align-center .box,
+.align-end .box,
+.align-stretch .box {
+    width: 50px;
+}
+
+.align-center {
+    align-items: center; /* Como se portar no eixo secundário (ditado pelo flex-direction) */
+    justify-content: center; /* Como se portar no eixo primário (ditado pelo flex-direction) */
+}
+
+.align-end {
+    align-items: end;
+}
+
+.align-stretch {
+    align-items: stretch;
+}
+
+.align-stretch .box {
+    height: auto;
+}
+
+/* Gap */
+.gap {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    justify-content: center;
+    border: 1px solid green;
+    gap: 10px;
+}
+
+.gap .box {
+    width: 32%;
+}
+
+/* Order */
+.order {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+#one {
+    order: 1;
+}
+
+#two {
+    order: 2;
+}
+
+#three {
+    order: 3;
+}
+
+/* Grow */
+.grow {
+    display: flex;
+}
+
+.grow .box {
+    /* Referencia base */
+    flex: 1;
+}
+
+.grow .big {
+    /* O quanto maior será em relação a sua referencia */
+    flex: 4;
+}
+
+/* Basis */
+.basis {
+    display: flex;
+}
+
+.basis .box {
+    flex-basis: 20px;
+}
+
+.basis .big {
+    flex-grow: 1;
+}
+
+/* Shrink */
+.shrink {
+    display: flex;
+}
+
+.shrink .box {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 250px;
+    width: auto;
+}
+
+.shrink .small {
+    flex-shrink: 2;
+}
+
+/* Align-self */
+.auto-align {
+    display: flex;
+    height: 300px;
+    align-items: center;
+    border: 1px solid purple;
+}
+
+.auto-align .different {
+    align-self: end;
+}

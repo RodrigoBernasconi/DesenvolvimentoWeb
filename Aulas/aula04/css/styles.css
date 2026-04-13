@@ -1,0 +1,107 @@
+html {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #DDD;
+}
+
+.container {
+    max-width: 1100px;
+    background-color: #FFF;
+    padding: 20px 50px;
+
+    /*Centralizando via uma pequena margin no top-bot, e margin automática no left-right*/
+    position: relative;
+    margin: 50px auto;
+    border-radius: 10px;
+    box-shadow: 10px 10px 15px 1px #888;
+    /*offset-h, offset-v, blur-radius (qnt maior mais blurry), spread-radius (1px expande de leve)*/
+}
+
+.bold {
+    font-weight: bold;
+}
+
+/* Cabeçalho*/
+.header {
+    text-align: center;
+}
+
+.main-title {
+    font-size: 50px;
+    text-shadow: 2px 2px 2px darkgrey;
+}
+
+.main-paragraph {
+    font-style: italic;
+}
+
+/*Imagem destaque*/
+.featured-image {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.large-img {
+    border-radius: 10px;
+}
+
+/*Biografia*/
+.biography-container {
+    padding: 25px 0;
+    margin: 25px 0;
+    border-top: 1px dashed #DDD;
+    border-bottom: 1px dashed #DDD;
+}
+
+/* Quotes / Citações */
+.quotes-container {
+    background-color: #DDD;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+/*Novo - pego um elemento (blockquote) de dentro de uma classe*/
+.quotes-container blockquote {
+    font-weight: bold;
+    font-size: 30px;
+    text-align: center;
+}
+
+.quotes-container p {
+    font-style: italic;
+    text-align: center;
+}
+
+/*Membros*/
+.members-container li { /*Aumenta o espaçamento entre os items <li> desta <ul>*/
+    height: 30px;
+}
+
+/*Legenda das imagems*/
+figcaption {
+    text-align: center;
+    margin-top: 8px;
+}
+
+/*Media*/
+.media-container {
+    padding: 25px 0;
+    margin: 25px 0;
+    border-top: 1px dashed #DDD;
+    border-bottom: 1px dashed #DDD;
+    text-align: center;
+}
+
+.media-container a {
+    text-decoration: none;
+}
+
+.media-container img {
+    height: 50px;
+    margin-right: 20px;
+}
+
+/*Rodapé*/
+.footer p {
+    font-size: 10px;
+    text-align: center;
+}

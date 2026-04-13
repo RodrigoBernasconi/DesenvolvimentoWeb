@@ -1,0 +1,82 @@
+* { /* Ver se tem outra maneira de como tirar */
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.header {
+    background-color: #155c7f;
+    position: sticky;
+    top: 0px;
+    padding: 8px;
+}
+
+.header-img, .header-links{
+    display: inline-block;
+}
+
+.header-img {
+    background-color: white;
+    border-radius: 16px;
+}
+
+.header-img img{
+    width: 52px;
+}
+
+.header-links {
+    position: absolute;
+    right: 8px;
+    margin-top: 18px;
+}
+
+.link-container {
+    padding: 8px;
+    color: black;
+    background-color: #c1e4f5;
+    border: 2px solid black;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Conteúdo textual */
+.main-container {
+    max-width: 1100px;
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px auto;
+}
+
+.text-content h1, p{
+    margin-bottom: 16px;
+}
+
+/* Imagens de exemplo */
+.img-container {
+    max-width: 1080px;
+    padding: 8px;
+    margin: 8px auto;
+}
+
+.row-img {
+    text-align: center;
+    padding: 12px;
+}
+
+.img-content {
+    width: 216px;
+    height: 160px;
+    margin: 0px 10px;
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+/* Rodapé */
+.footer {
+    font-size: 8px;
+    text-align: center;
+    font-weight: bold;
+}

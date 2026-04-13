@@ -1,0 +1,28 @@
+h1 {
+    color: red;
+}
+
+/*min-width (simula o CSS sendo pensado primeiro para mobile)*/
+p {
+    background-color: yellow;
+    color: black;
+}
+
+/*O breakpoint dessa query terá seu gatilho vermelho e preto enquanto a tela tiver, no mínimo, 800px*/
+@media screen and (min-width: 800px) {
+    /*O código abaixo é rodado na media query quando detectar estar em um desktop*/
+    p {
+        background-color: black;
+        color: red;
+    }
+}
+
+/*O breakpoint dessa media-query terá seu gatilho de cor azul enquanto a tela tiver no max 500px
+Como se lê a query abaixo:
+    - Quero observar a tela e, enquanto ela tiver no máximo 500px, carrego o CSS do h1 azul
+*/
+@media screen and (max-width: 500px) {
+    h1 {
+        color: blue;
+    }
+}

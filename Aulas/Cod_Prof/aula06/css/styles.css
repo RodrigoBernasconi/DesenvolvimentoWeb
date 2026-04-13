@@ -1,0 +1,191 @@
+body {
+    padding-bottom: 500px;
+}
+
+/* Flex */
+.flex {
+    display: flex;
+    background-color: #DDD;
+    margin-bottom: 20px;
+}
+
+/* Column */
+.flex-column {
+    display: flex;
+    flex-direction: column; /* Altera o eixo primário do container */
+    background-color: #CCC;
+    margin-bottom: 20px;
+}
+
+/* Wrap */
+.wrap {
+    display: flex;
+    flex-wrap: wrap; /* Permite a quebra de linha dos elementos filhos para comportar suas regras de tamanho*/
+    margin-bottom: 20px;
+}
+
+.box {
+    height: 40px;
+    width: 33%;
+    border: 1px solid red;
+}
+
+/* Justify-Content */
+.center {
+    display: flex;
+    margin-bottom: 20px;
+    justify-content: center; /*Centraliza os elementos filhos dentro do container pai*/
+    border: 1px dashed purple;
+}
+
+.center .box {
+    width: 50px;
+}
+
+.space-around,
+.space-between,
+.end {
+    display: flex;
+    margin-bottom: 20px;
+    justify-content: center; /*Centraliza os elementos filhos dentro do container pai*/
+    border: 1px dashed purple;
+}
+
+.space-around .box,
+.space-between .box,
+.end .box {
+    width: 50px;
+}
+
+.space-around {
+    justify-content: space-around;
+}
+
+.space-between {
+    justify-content: space-between;
+}
+
+.end {
+    justify-content: end;
+}
+
+/*align-items*/
+.align-center,
+.flex-end,
+.stretch {
+    display: flex;
+    margin-bottom: 20px;
+    height: 200px;
+    border: 1px solid blue;
+}
+
+.align-center .box,
+.flex-end .box,
+.stretch .box {
+    width: 50px;
+}
+
+.align-center {
+    align-items: center; /* align-items indica como os elementos devem se comportar no eixo secundário (que é ditado pelo flex-direction)*/
+    justify-content: center;
+}
+
+.flex-end {
+    align-items: flex-end;
+}
+
+.stretch {
+    align-items: stretch;
+}
+
+.stretch .box {
+    height: auto;
+}
+
+/*gap*/
+.gap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    border: 1px solid green;
+    gap: 10px;
+}
+
+.gap .box {
+    width: 32%;
+}
+
+/* order */
+.order {
+    display: flex;
+}
+
+#one {
+    order: 1;
+}
+
+#two {
+    order: 2;
+}
+
+#three {
+    order: 3;
+}
+
+/*grow*/
+.grow {
+    display: flex;
+}
+
+.grow .box {
+    flex: 1;
+}
+
+.grow .big {
+    flex: 2;
+}
+
+.grow .bigger {
+    flex: 3;
+}
+
+/*basis*/
+.basis {
+    display: flex;
+}
+
+.basis .box {
+    flex-basis: 20px; /*A largura (ou eixo secundário) dos elementos se torna 20px*/
+}
+
+.basis .big {
+    flex-grow: 1;
+}
+
+/*shrink*/
+.shrink {
+    display: flex;
+}
+
+.shrink .box {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 250px;
+    width: auto;
+}
+
+.shrink .small {
+    flex-shrink: 3;
+}
+
+/*Auto-Alignment*/
+.auto-alignment {
+    display: flex;
+    height: 300px;    
+    align-items: center;
+    border: 1px solid purple;
+}
+
+.auto-alignment .different {
+    align-self: end;
+}

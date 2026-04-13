@@ -1,0 +1,326 @@
+body {
+    background-color: antiquewhite;
+}
+
+h3 {
+    color: darkgreen;
+}
+
+/* Classes */
+.paragrafo {
+    background-color: black;
+    color: green;
+    padding: 15px;
+}
+
+/* ID */
+#header-exclusivo {
+    background-color: purple;
+    color: greenyellow;
+    padding: 10px;
+    font-size: 40px;
+}
+
+/* HEX */
+.hex {
+    color: #0F99FF;
+}
+
+.hex2 {
+    color: #1C8C04;
+}
+
+/* RGB */
+.rgb {
+    color: rgb(150, 59, 205);
+}
+
+.rgb-mix {
+    color: rgb(99, 100, 0);
+}
+
+.rgba {
+    color: rgba(100, 99, 45, 0.4);
+}
+
+/* Background-Image */
+.bg-image {
+    background-image: url("../img/natureza.jpg");
+    padding: 15px;
+    color: white;
+}
+
+/* Centralizando background-image*/
+.bg-center,
+.bg-default {
+    width: 400px;
+    height: 400px;
+    background-image: url("../img/ponte.jpg");
+}
+
+.bg-center {
+    background-position: center;
+    background-size: cover;
+}
+
+/* Altura e Largura */
+.altura-largura1 {
+    height: 200px;
+    width: 100px;
+    background-color: #FF0000;
+}
+
+.altura-largura2 {
+    height: 300px;
+    background-color: #333333;
+}
+
+/* Padding */
+.sem-padding {
+    background-color: #111111;
+    color: #FFFFFF;
+}
+
+.com-padding {
+    background-color: #333333;
+    color: #FFFFFF;
+    padding: 20px;
+}
+
+.padding-individual {
+    background-color: #222222;
+    font-size: 30px;
+    color: #FFFFFF;
+    padding: 5px 10px 50px 40px; 
+}
+
+/* Padding odeia width */
+.div-default {
+    width: 50px;
+    height: 50px;
+    margin: 10px;
+    background-color: red;
+}
+
+.div-safada {
+    width: 50px;
+    height: 50px;
+    margin: 10px;
+    padding: 10px;
+    box-sizing: border-box; /*Faz com que o width e o padding se amem*/
+    background-color: black;
+}
+
+/* Border */
+.borda1 {
+    border: 5px solid red;
+    padding: 10px;
+}
+
+.borda2 {
+    border: 2px dotted #222222;
+    padding: 25px;
+}
+
+.borda-esquerda {
+    color: #FFFFFF;
+    border-left: 15px solid gold;
+    background-color: #222222;
+    padding: 25px;
+}
+
+.borda-bot {
+    color: #000000;
+    border-bottom: 8px dashed #393939;
+    background-color: #EEEEEE;
+    padding: 25px;
+}
+
+.arredondado1 {
+    border: 2px solid red;
+    background-color: black;
+    color: green;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.arredondado2 {
+    background-color: black;
+    color: green;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 15px;
+}
+
+/* Margin */
+.margin{
+    margin: 10px;
+    background-color: #222222;
+    color: #ffffff;
+}
+
+.margin2 {
+    margin-top: 50px;
+    background-color: #444444;
+    color: #ffffff;
+    padding: 10px;
+}
+
+.margin3{
+    margin: 5px 10px 15px 20px;
+    background-color: #666666;
+}
+
+/* Box-Model */
+.box-model {
+    margin: 20px;
+    padding: 15px;
+    border: 3px solid #848585;
+    border-radius: 6px;
+    width: 250px;
+    height: 250px;
+    box-sizing: border-box;
+}
+
+/* Alinhamento de texto */
+.text-aligned {
+    text-align: right;
+}
+
+.container-center {
+    text-align: center;
+}
+
+.espacado {
+    font-size: 30px;
+    letter-spacing: 10px;
+}
+
+/*Font-Family*/
+.serif {
+    font-family: serif;
+}
+
+.sans-serif {
+    font-size: 40px;
+    font-family: sans-serif;
+}
+
+.mono {
+    font-size: 40px;
+    font-family: monospace;
+}
+
+.cursive {
+    font-size: 40px;
+    font-family: cursive;
+}
+
+.fantasy {
+    font-size: 40px;
+    font-family: fantasy;
+}
+
+/* Display Inline vs Block*/
+.inline {
+    width: 50px;
+    height: 50px;
+    background-color: #000000;
+    margin: 10px;
+    display: inline-block;
+}
+
+.block {
+    display: block;
+}
+
+.invisivel {
+    display: none;
+}
+
+/*position:relative*/
+.relative {
+    position: relative;
+    background-color: #224422;
+    color: #ffffff;
+    width: 100px;
+    height: 100px;
+    top: 45px;
+    left: 100px;
+}
+
+/*position:absolute*/
+.absolute {
+    position: absolute;
+    background-color: orange;
+    color: #FFFFFF;
+    width: 100px;
+    height: 100px;
+    top: 100px;
+    left: 10px;
+}
+
+/*Absolute dentro de relative*/
+.relative-container {
+    width: 300px;
+    height: 300px;
+    border: 2px dashed red;
+    margin-top: 50px;
+    position: relative;
+}
+
+.absolute1,
+.absolute2 {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-color: #442442;
+}
+
+.absolute2 {
+    top: 150px;
+    left: 97px;
+}
+
+.fixed {
+    height: 50px;
+    border: 1px solid blue;
+    background-color: mediumaquamarine;
+    margin-top: 20px;
+    position: fixed;
+    top: 5px;
+}
+
+.sticky {
+    position: sticky;
+    width: 100px;
+    height: 100px;
+    background-color: pink;
+    border: 2px solid greenyellow;
+    top: 10px;
+}
+
+.absolute5,
+.absolute6,
+.absolute7 {
+    height: 50px;
+    width: 50px;
+    position: absolute
+}
+
+.absolute5 {
+    background-color: blue;
+    z-index: 1;
+}
+
+.absolute6 {
+    background-color: red;
+    z-index: 3;
+    top: 25px;
+}
+
+.absolute7 {
+    background-color: green;
+    z-index: 2;
+    top: 50px;
+}
