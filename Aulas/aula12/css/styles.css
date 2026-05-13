@@ -1,0 +1,9 @@
+.oculto {
+    display: none;
+}
+
+.btnVermelho {
+    color: darkred;
+    font-weight: bolder;
+    font-size: larger;
+}
