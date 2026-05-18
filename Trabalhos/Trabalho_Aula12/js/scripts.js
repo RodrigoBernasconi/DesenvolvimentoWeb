@@ -1,13 +1,14 @@
 let plusBtn = document.querySelector("#plus-btn");
 let minusBtn = document.querySelector("#minus-btn");
+let container = document.querySelector(".img-container");
 let imgs = document.getElementsByClassName("box");
 let imgsClasses = ["img-x100", "img-x200", "img-x300"];
 let control = 1;
 
-const resizeImgs = (curSize, newsize) => {
+const resizeImgs = (curSize, newSize) => {
     for (let i = 0; i < imgs.length; i++){
-        imgs[i].classList.remove(imgsClasses[curSize])
-        imgs[i].classList.add(imgsClasses[newsize])
+        imgs[i].classList.remove(imgsClasses[curSize]);
+        imgs[i].classList.add(imgsClasses[newSize]);
     };
 };
 
