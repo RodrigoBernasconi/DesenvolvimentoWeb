@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookFinder - UNISINOS</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <!--Cabeçalho (header é a tag semântica para cabeçalhos)-->
+    <header class="site-header">
+        <h1>BookFinder</h1>
+        <p class="subtitle">Desenvolvido com a <a href="https://openlibrary.org" target="_blank">Open Library API</a></p>
+    </header>
+
+    <!--Conteúdo principal-->
+    <main class="container">
+        <section class="search-section">
+            <!--Formulário de busca-->
+            <form id="search-form" role="search" aria-label="Pesquisar livros">
+                <div class="input-row">
+                    <label for="search-input" class="visually-hidden">Pesquisar livros</label>
+                    <input 
+                        id="search-input" 
+                        type="text" 
+                        placeholder="Pesquise por título, autor ou palavra-chave..."
+                        autocomplete="off"
+                        required>
+
+                    <!--Menu para filtrar resultados-->
+                    <label for="search-type" class="visually-hidden">Tipo de busca</label>
+                    <select id="search-type">
+                        <option value="q">Todos os campos</option>
+                        <option value="title">Título</option>
+                        <option value="author">Autor</option>
+                    </select>
+
+                    <button type="submit" id="search-btn">Pesquisar</button>
+                </div>
+            </form>
+        </section>
+
+        <!--Mensagens de status / erro-->
+        <div id="status-message" class="status-message" role="status" aria-live="polite" hidden></div>
+
+        <!--Spinner de carregamento
+            O spinner nada mais é do que um <div> vazio. Todo o efeito visual vem do CSS-->
+        <div id="loader" class="loader" hidden>
+            <div class="spinner"></div>
+            <p>Buscando livros</p>
+        </div>
+
+        <!--Seção de resultados
+            Os cards são inseridos aqui via JS-->
+        <section id="results-section" hidden>
+            <div class="results-header">
+                <h2 id="results-title">Resultados</h2>
+                <!--Exibiremos o número total de resultados encontrados abaixo-->
+                <span id="results-count" class="results-count"></span>
+            </div>
+
+            <!--Abaixo a div na qual os cards serão inseridos-->
+            <div id="results-grid" class="results-grid"></div>
+
+            <div id="pagination" class="pagination" hidden>
+                <button id="btn-prev" disabled><- Anterior</button>
+                <span id="page-indicator">Página 1</span>
+                <button id="btn-next">Próxima -></button>
+            </div>
+        </section>
+
+        <!--Modal de detalhes do livro
+            Aparece sobre a página quando o usuário clica em um card.
+            O atributo hidden é removido via JS quando necessário.-->
+        <div id="modal-overlay" class="modal-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <div class="modal">
+                <button id="modal-close" class="modal-close" aria-labelledby="Fechar detalhes">X</button>
+                <!--O conteúdo da janela modal é inserido via JS-->
+                <div id="modal-body" class="modal-body"></div>
+            </div>            
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <p>Desenvolvimento Web - UNISINOS<br>
+            Este trabalho faz uso da API da <a href="https://openlibrary.org" target="_blank">Open Library</a>
+        </p>
+    </footer>
+    
+</body>
+<script src="js/script.js"></script>
+</html>

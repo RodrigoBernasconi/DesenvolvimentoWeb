@@ -1,0 +1,305 @@
+/* Define cores reutilizáveis */
+:root {
+  --accent: #2563eb;
+  --border: #ccc;
+  --muted:  #666;
+}
+
+/* Reset básico: remove margens e padding padrão do navegador */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: sans-serif;
+  background: #f5f5f5;
+  color: #222;
+  padding: 1rem;
+}
+
+a { color: var(--accent); }
+
+/* ── Cabeçalho ──────────────────────────────────────────── */
+.site-header {
+  background: var(--accent);
+  color: white;
+  text-align: center;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
+}
+
+.site-header a { color: white; }
+
+/* ── Formulário de busca ────────────────────────────────── */
+.search-section {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* LIÇÃO: display:flex posiciona os filhos lado a lado.
+   flex-wrap:wrap faz com que quebrem para a linha seguinte em telas pequenas. */
+.input-row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+#search-input {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+#search-type {
+  padding: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+
+#search-btn {
+  padding: 0.5rem 1.2rem;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+#search-btn:hover   { opacity: 0.85; }
+#search-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ── Mensagem de status ─────────────────────────────────── */
+.status-message {
+  padding: 0.75rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  border: 1px solid var(--border);
+}
+
+.status-message.error { background: #fee2e2; color: #b91c1c; }
+.status-message.info  { background: #eff6ff; color: #1d4ed8; }
+
+/* ── Spinner de carregamento ────────────────────────────── */
+.loader { text-align: center; padding: 2rem; color: var(--muted); }
+
+/*
+  O spinner é um <div> simples estilizado para parecer um anel girando.
+  Nenhuma imagem ou biblioteca necessária — apenas CSS.
+
+  Passo 1: @keyframes define a animação.
+  "spin" é o nome que damos a ela. Dentro, dizemos:
+  ao final ("to"), rotacione o elemento 360° (uma volta completa).
+  O CSS interpola automaticamente os quadros intermediários.
+*/
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/*
+  Passo 2: Estilize o <div> para parecer um anel.
+
+  - width/height: define um quadrado de tamanho fixo.
+  - border: desenha um anel cinza completo nos quatro lados.
+  - border-top-color: substitui apenas o segmento superior pela cor
+    de destaque, criando a ilusão de uma lacuna que "persegue" a si mesma.
+  - border-radius: 50% transforma o quadrado em círculo.
+  - margin: 0 auto centraliza horizontalmente.
+  - animation: aplica o keyframe "spin".
+      0.8s       — uma rotação completa leva 0,8 segundos
+      linear     — velocidade constante (sem aceleração ou desaceleração)
+      infinite   — repete para sempre
+*/
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  margin: 0 auto 0.75rem;
+  animation: spin 0.8s linear infinite;
+}
+
+/* ── Resultados ─────────────────────────────────────────── */
+.results-header {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.results-count { font-size: 0.9rem; color: var(--muted); }
+
+/* LIÇÃO: CSS Grid com auto-fill cria quantas colunas couberem,
+   cada uma com no mínimo 180px — sem media queries necessárias. */
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+/* ── Card de livro ──────────────────────────────────────── */
+.book-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.book-card:hover { outline: 2px solid var(--accent); }
+
+.book-cover {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  background: #ddd;
+  display: block;
+}
+
+.book-cover-placeholder {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  background: #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+}
+
+.book-info  { padding: 0.6rem; }
+.book-title { font-weight: bold; font-size: 0.9rem; }
+.book-author, .book-year { font-size: 0.8rem; color: var(--muted); margin-top: 0.2rem; }
+
+/* ── Paginação ──────────────────────────────────────────── */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.pagination button {
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--border);
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pagination button:hover:not(:disabled) { background: var(--accent); color: white; }
+.pagination button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* ── Modal ──────────────────────────────────────────────── */
+
+/* LIÇÃO: position:fixed + inset:0 faz o overlay cobrir toda a
+   viewport independentemente da posição de rolagem da página. */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 1000;
+}
+
+.modal {
+  background: white;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 1.5rem;
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--muted);
+}
+
+.modal-body { display: flex; flex-direction: column; gap: 0.75rem; }
+
+.modal-cover-wrap { display: flex; justify-content: center; }
+
+.modal-cover {
+  width: 120px;
+  border-radius: 4px;
+}
+
+.modal-cover-placeholder {
+  width: 120px;
+  aspect-ratio: 2 / 3;
+  background: #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  border-radius: 4px;
+}
+
+#modal-title    { font-size: 1.3rem; font-weight: bold; }
+.modal-meta     { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+.badge {
+  background: #eff6ff;
+  color: var(--accent);
+  border: 1px solid #bfdbfe;
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+  font-size: 0.8rem;
+}
+
+.modal-description { font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
+
+.modal-ol-link {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: var(--accent);
+  color: white;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+/* ── Rodapé ─────────────────────────────────────────────── */
+.site-footer {
+  text-align: center;
+  margin-top: 2rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+/* ── Utilitários ────────────────────────────────────────── */
+
+/* Oculta elementos visualmente, mas mantém a leitura por leitores de tela */
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+}
+
+/* LIÇÃO: O atributo [hidden] deveria definir display:none, mas um
+   valor CSS explícito de display (como display:flex) pode sobrescrevê-lo.
+   Esta regra garante que [hidden] sempre vença. */
+[hidden] { display: none !important; }
