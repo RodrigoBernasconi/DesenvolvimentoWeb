@@ -107,12 +107,29 @@ async function fetchAnimals() {
     }
 };
 
-function renderResults(animals) {
+async function getAnimalConservation(animal) {
+    const url = await fetch (
+        `${INATURALIST_API}=${encodeURIComponent(animal)}`,
+        {method: "GET"}
+    );
+
+    const data_animal = await url.json();
+    const results = data_animal.results || [];
+    const conservation = results[0]?.conservation_status?.status_name ?? "Not informed";
+    console.log(conservation);
+    return conservation;
+};
+
+async function renderResults(animals) {
     resultsTitle.textContent = `Resultados para "${currentQuery}"`;
     const totalPages = Math.ceil(totalResults / PAGE_SIZE);
     resultsCount.textContent = `${totalResults} animais encontrados. Página ${currentPage} de ${totalPages}`;
 
-    animals.forEach((animal) => resultsGrid.appendChild(createAnimalCard(animal)));
+    const cardsPromises = animals.map(createAnimalCard);    // Um array com a chamada de createAnimalCard(animal[0]) e assim por diante...
+    const cards = await Promise.all(cardsPromises);         // Espera as requisições terminarem e me devolve os resultados
+
+    cards.forEach(card => {resultsGrid.appendChild(card);});
+
     resultsSection.hidden = false;
 
     if (totalPages > 1) {
@@ -125,23 +142,29 @@ function renderResults(animals) {
     }
 };
 
-function createAnimalCard(animal) {
+async function createAnimalCard(animal) {
     const name = animal.name || "Nome desconhecido";
-    const scientific_name = animal.taxonomy?.scientific_name;
+    const scientificName = animal.taxonomy?.scientific_name;
     const habitat = animal.characteristics?.habitat;
     const diet = animal.characteristics?.diet;
 
+    // Buscando estado de conservação do animal
+    const conservationStatus = await getAnimalConservation(scientificName);
+
+    // Construindo o card no HTML
     const card = document.createElement("article");
     card.className = "animal-card";
     card.innerHTML = `
     <div>
         <p class="animal-name">${escapeHTML(name)}</p>
-        <p class="animal-info">${escapeHTML(scientific_name)}</p>
+        <p class="animal-info">${escapeHTML(scientificName)}</p>
         <p class="animal-info">${escapeHTML(habitat)}</p>
         <p class="animal-info">${escapeHTML(diet)}</p>
-    </div>
+        <p class="animal-info">${escapeHTML(conservationStatus)}</p>
+        </div>
     `;
-
+        // <p class="animal-info">${escapeHTML(conservationStatus)}</p>
+        
     card.addEventListener("click", () => openModal(animal));
     return card;
 };
@@ -195,19 +218,19 @@ function escapeHTML(str) {
 //     getInfos(data);
 
 //     //* Pegando estado de conservação dos animais com outra API do inaturalist ========
-//     // const animal_teste = data[0]
-//     // const cn = animal_teste.taxonomy?.scientific_name
-//     // const url_inaturalist = await fetch(
-//     //     `https://api.inaturalist.org/v1/taxa?q=${encodeURIComponent(cn)}`,
-//     //     {
-//     //         method: "GET",
-//     //     }
-//     // );
+    // const animal_teste = data[0]
+    // const cn = animal_teste.taxonomy?.scientific_name
+    // const url_inaturalist = await fetch(
+    //     `https://api.inaturalist.org/v1/taxa?q=${encodeURIComponent(cn)}`,
+    //     {
+    //         method: "GET",
+    //     }
+    // );
 
-//     // const test_data = await url_inaturalist.json();
-//     // const results = test_data.results || [];
-//     // const edc = results[0].conservation_status.status_name;
-//     // console.log(edc);
+    // const test_data = await url_inaturalist.json();
+    // const results = test_data.results || [];
+    // const edc = results[0].conservation_status.status_name;
+    // console.log(edc);
 //     //* ===============================================================================
 
 //     return data;
