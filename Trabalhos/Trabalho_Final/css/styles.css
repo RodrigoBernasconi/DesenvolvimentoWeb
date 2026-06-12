@@ -5,7 +5,15 @@
   --black: #0D0D0D;
   --border: #ccc;
   --muted:  #666;
+  --red: #A60311;
+  --yellow: #BF9663;
+  --orange: #D97016;
 }
+
+/* Insufficient data(gray) > Data Deficient(DD), Not Evaluated(NE), Not informed */
+/* Low risk(green) > Near Threatened(NT), Least Concern(LC) */
+/* High risk(yellow) > Vulnerable(VU), Endangered(EN), Critically Endangered(CR)*/
+/* Extinct (red) > Extinct in the wild(EW), Extinct(EX) */
 
 /* Reset básico: remove margens e padding padrão do navegador */
 * {
@@ -138,16 +146,25 @@ a {
 
 /* ! Card do animal */
 .animal-card {
+    display: flex;
+    flex-direction: column;
     background: white;
     border: 1px solid var(--border);
     border-radius: 6px;
     cursor: pointer;
     overflow: hidden;
     padding: 0.75rem;
+    /* height: 100%; */
 }
 
 .animal-card:hover {
     outline: 2px solid var(--dark-green);
+}
+
+.animal-grid {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .animal-info {
@@ -155,9 +172,34 @@ a {
     font-size: 1rem;
 }
 
+.animal-info span{
+    color: var(--dark-green);
+    font-weight: bold;
+    padding: 0.6rem;
+    font-size: 1rem;
+}
+
 .animal-name {
+    text-align: center;
     font-weight: bold;
     font-size: 1.25rem;
+}
+
+.animal-sci-name {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--dark-green);
+}
+
+.animal-status {
+    text-align: center;
+    background: var(--dark-green);
+    color: white;
+    border: 1px solid var(--dark-green);
+    border-radius: 6px;
+    margin-top: auto;
+    text-transform: capitalize;
+    padding: 0.35rem 0;
 }
 
 /* Paginação */
@@ -187,7 +229,7 @@ a {
     cursor: not-allowed;
 }
 
-/*! Modal */
+/* Modal */
 .modal-overlay {
     position: fixed;
     inset: 0;
@@ -236,7 +278,7 @@ a {
 .modal-animal-name-s {
     font-size: 1rem;
     text-align: center;
-    color: var(--muted);
+    color: var(--dark-green);
     margin-bottom: 0.5rem;
 }
 

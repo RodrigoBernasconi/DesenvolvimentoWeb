@@ -142,11 +142,13 @@ async function renderResults(animals) {
     }
 };
 
+//? Sessão de favoritos - Como fazer?
+
 async function createAnimalCard(animal) {
-    const name = animal.name || "Nome desconhecido";
-    const scientificName = animal.taxonomy?.scientific_name;
-    const habitat = animal.characteristics?.habitat;
-    const diet = animal.characteristics?.diet;
+    const name = animal.name || "Name not found";
+    const scientificName = animal.taxonomy?.scientific_name || "Scientific name not found";
+    const habitat = animal.characteristics?.habitat || "not informed";
+    const diet = animal.characteristics?.diet || "not informed";
 
     // Buscando estado de conservação do animal
     const conservationStatus = await getAnimalConservation(scientificName);
@@ -155,12 +157,12 @@ async function createAnimalCard(animal) {
     const card = document.createElement("article");
     card.className = "animal-card";
     card.innerHTML = `
-    <div>
+    <div class="animal-grid">
         <p class="animal-name">${escapeHTML(name)}</p>
-        <p class="animal-info">${escapeHTML(scientificName)}</p>
-        <p class="animal-info">${escapeHTML(habitat)}</p>
-        <p class="animal-info">${escapeHTML(diet)}</p>
-        <p class="animal-info">${escapeHTML(conservationStatus)}</p>
+        <p class="animal-sci-name"><span>${escapeHTML(scientificName)}</span></p>
+        <p class="animal-info"><span>Diet: </span>${escapeHTML(diet)}</p>
+        <p class="animal-info"><span>Habitat: </span>${escapeHTML(habitat)}</p>
+        <p class="animal-status">${escapeHTML(conservationStatus)}</p>
     </div>
     `;
         
@@ -172,15 +174,15 @@ async function createAnimalCard(animal) {
 async function openModal(animal) {
     console.log("Fui clicado para abrir modal", animal)
     modalOverlay.hidden = false;
-    const name = animal.name || "Name not informed";
+    const name = animal.name || "Name not found";
     const scientificName = animal.taxonomy?.scientific_name || "Scientific name not informed";
-    const diet = animal.characteristics?.diet || "Diet not informed";
-    const prey = animal.characteristics?.prey || "Prey not informed";
-    const habitat = animal.characteristics?.habitat || "Habitat not informed";
-    const location = animal.characteristics?.location || "Location not informed";
-    const group = animal.characteristics?.group || "Group not informed";
-    const weight = animal.characteristics?.weight || "Weight not informed";
-    const height = animal.characteristics?.height || "Height not informed";
+    const diet = animal.characteristics?.diet || "Not informed";
+    const prey = animal.characteristics?.prey || "Not informed";
+    const habitat = animal.characteristics?.habitat || "Not informed";
+    const location = animal.characteristics?.location || "Not informed";
+    const group = animal.characteristics?.group || "Not informed";
+    const weight = animal.characteristics?.weight || "Not informed";
+    const height = animal.characteristics?.height || "Not informed";
 
     // Renderizando as informações básicas para resultado de busca
     modalBody.innerHTML = `
@@ -189,21 +191,19 @@ async function openModal(animal) {
         <p class="modal-animal-name-s">${escapeHTML(scientificName)}</p>
         <div class="modal-row-s">
             <div class="modal-card">
-                <h4>Diet:</h4>
-                <p class="animal-info">${escapeHTML(diet)}</p>
-                <p class="animal-info">${escapeHTML(prey)}</p>
+                <p class="animal-info"><span>Diet:</span> ${escapeHTML(diet)}</p>
+                <p class="animal-info"><span>Prey:</span> ${escapeHTML(prey)}</p>
             </div>
             <div class="modal-card">
-                <h4>Habitat:</h4>
-                <p class="animal-info">${escapeHTML(habitat)}</p>
-                <p class="animal-info">${escapeHTML(location)}</p>
+                <p class="animal-info"><span>Habitat:</span> ${escapeHTML(habitat)}</p>
+                <p class="animal-info"><span>Location:</span> ${escapeHTML(location)}</p>
             </div>
         </div>
         <div class="modal-card">
             <h4>Characteristics:</h4>
-            <p class="animal-info">${escapeHTML(group)}</p>
-            <p class="animal-info">${escapeHTML(weight)}</p>
-            <p class="animal-info">${escapeHTML(height)}</p>
+            <p class="animal-info"><span>Group:</span> ${escapeHTML(group)}</p>
+            <p class="animal-info"><span>Weight:</span> ${escapeHTML(weight)}</p>
+            <p class="animal-info"><span>Height:</span> ${escapeHTML(height)}</p>
         </div>
     </div>
     `;
