@@ -55,13 +55,13 @@ btnNext.addEventListener("click", () => {
     fetchAnimals();
 });
 
-// modalClose.addEventListener("click", closeModal);
-// modalOverlay.addEventListener("click", (e) => {
-//     if (e.target === modalOverlay) closeModal();
-// });
-// document.addEventListener("keydown", (e) => {
-//     if (e.key === "Escape") closeModal();
-// });
+modalClose.addEventListener("click", closeModal);
+modalOverlay.addEventListener("click", (e) => {
+    if (e.target === modalOverlay) closeModal();
+});
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeModal();
+});
 
 async function fetchAnimals() {
     // Estado de carregamento
@@ -161,13 +161,53 @@ async function createAnimalCard(animal) {
         <p class="animal-info">${escapeHTML(habitat)}</p>
         <p class="animal-info">${escapeHTML(diet)}</p>
         <p class="animal-info">${escapeHTML(conservationStatus)}</p>
-        </div>
+    </div>
     `;
-        // <p class="animal-info">${escapeHTML(conservationStatus)}</p>
         
     card.addEventListener("click", () => openModal(animal));
     return card;
 };
+
+// Modal - Abre uma descrição com mais informações do animal
+async function openModal(animal) {
+    console.log("Fui clicado para abrir modal", animal)
+    modalOverlay.hidden = false;
+    const name = animal.name || "Name not informed";
+    const scientificName = animal.taxonomy?.scientific_name || "Scientific name not informed";
+    const diet = animal.characteristics?.diet || "Diet not informed";
+    const prey = animal.characteristics?.prey || "Prey not informed";
+    const habitat = animal.characteristics?.habitat || "Habitat not informed";
+    const location = animal.characteristics?.location || "Location not informed";
+    const group = animal.characteristics?.group || "Group not informed";
+    const weight = animal.characteristics?.weight || "Weight not informed";
+    const height = animal.characteristics?.height || "Height not informed";
+
+    // Renderizando as informações básicas para resultado de busca
+    modalBody.innerHTML = `
+    <div>
+        <h2 class="modal-animal-name-l">${escapeHTML(name)}</h2>
+        <p class="modal-animal-name-s">${escapeHTML(scientificName)}</p>
+        <div class="modal-row-s">
+            <div class="modal-card">
+                <h4>Diet:</h4>
+                <p class="animal-info">${escapeHTML(diet)}</p>
+                <p class="animal-info">${escapeHTML(prey)}</p>
+            </div>
+            <div class="modal-card">
+                <h4>Habitat:</h4>
+                <p class="animal-info">${escapeHTML(habitat)}</p>
+                <p class="animal-info">${escapeHTML(location)}</p>
+            </div>
+        </div>
+        <div class="modal-card">
+            <h4>Characteristics:</h4>
+            <p class="animal-info">${escapeHTML(group)}</p>
+            <p class="animal-info">${escapeHTML(weight)}</p>
+            <p class="animal-info">${escapeHTML(height)}</p>
+        </div>
+    </div>
+    `;
+}
 
 function closeModal() {
     modalOverlay.hidden = true;
@@ -185,59 +225,3 @@ function escapeHTML(str) {
     div.appendChild(document.createTextNode(String(str)));
     return div.innerHTML;
 };
-
-// async function getInfos(data) {
-//     for(let i = 0; i < data.length; i++){
-//         const animal = data[i];
-//         const name = animal.name;
-//         const scientificName = animal.taxonomy?.scientific_name ?? "Nome Científico não informado" ;
-//         const diet = animal.characteristics?.diet;
-//         const conservationStatus = animal.characteristics?.conversation_status ?? "Não informado";
-//         // Exibição detalhada
-//         console.log(`Nome: ${name} | NC: ${scientificName} | Dieta: ${diet} | EdC: ${conservationStatus}`);
-//     }
-// }
-
-// async function getAnimal(animalName) {
-//   try {
-//     const response = await fetch(
-//     //   `https://api.api-ninjas.com/v1/animals?name=${encodeURIComponent(animalName)}`,
-//         `${NINJA_API}=${encodeURIComponent(animalName)}`,
-//       {
-//         method: "GET",
-//         headers: {
-//           "X-Api-Key": API_KEY
-//         }
-//       }
-//     );
-
-//     if (!response.ok) { throw new Error(`HTTP ${response.status}`); }
-
-//     const data = await response.json();
-//     console.log(data);
-//     getInfos(data);
-
-//     //* Pegando estado de conservação dos animais com outra API do inaturalist ========
-    // const animal_teste = data[0]
-    // const cn = animal_teste.taxonomy?.scientific_name
-    // const url_inaturalist = await fetch(
-    //     `https://api.inaturalist.org/v1/taxa?q=${encodeURIComponent(cn)}`,
-    //     {
-    //         method: "GET",
-    //     }
-    // );
-
-    // const test_data = await url_inaturalist.json();
-    // const results = test_data.results || [];
-    // const edc = results[0].conservation_status.status_name;
-    // console.log(edc);
-//     //* ===============================================================================
-
-//     return data;
-//   } catch (error) {
-//     console.error("Erro na chamada da API:", error);
-//   }
-// }
-
-// Método com panda como parâmetro. Lembrem que o nome do animal precisa estar em inglês
-// getAnimal("Black Rhino");
