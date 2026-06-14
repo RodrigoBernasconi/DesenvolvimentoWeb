@@ -9,53 +9,22 @@
 // da página ou em uma janela modal, como fizemos no último Trabalho Guiado.
 
 // URLs das APIs em uso
-const NINJA_API = "https://api.api-ninjas.com/v1/animals?name";
-const API_KEY = "atB8dgsr9nKBaJHM3xSdxIKzkRF0EAVkXwiCzDez";
 const INATURALIST_API = "https://api.inaturalist.org/v1/taxa?q"
-const PAGE_SIZE = 8;
 
-// Estados da aplicação
+// Estado de aplicação
 let currentAnimal = "";
-let currentQuery = "";
-let currentType = "";
-let currentPage = 1;
-let totalResults = 0;
 
 // Buscando no DOM todos os elementos necessários
-const searchForm = document.getElementById("search-form");
-const searchInput = document.getElementById("search-input");
-const searchBtn = document.getElementById("search-btn");
 const statusMessage = document.getElementById("status-message");
 const loader = document.getElementById("loader");
 const resultsSection = document.getElementById("results-section");
 const resultsTitle = document.getElementById("results-title");
 const resultsCount = document.getElementById("results-count");
 const resultsGrid = document.getElementById("results-grid");
-const pagination = document.getElementById("pagination");
-const btnPrev = document.getElementById("btn-prev");
-const btnNext = document.getElementById("btn-next");
-const pageIndicator = document.getElementById("page-indicator");
 const modalOverlay = document.getElementById("modal-overlay");
 const modalFavorite = document.getElementById("modal-favorite");
 const modalClose = document.getElementById("modal-close");
 const modalBody = document.getElementById("modal-body");
-
-searchForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-    currentQuery = searchInput.value.trim();
-    currentPage = 1;
-    if (currentQuery) fetchAnimals();
-});
-
-btnPrev.addEventListener("click", () => {
-    currentPage--;
-    fetchAnimals();
-});
-
-btnNext.addEventListener("click", () => {
-    currentPage++;
-    fetchAnimals();
-});
 
 modalFavorite.addEventListener("click", changeFavorite);
 
@@ -66,50 +35,6 @@ modalOverlay.addEventListener("click", (e) => {
 document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") closeModal();
 });
-
-async function fetchAnimals() {
-    // Estado de carregamento
-    loader.hidden = false;
-    searchBtn.disabled = true;
-    searchBtn.textContent = "Pesquisando...";
-    statusMessage.hidden = true;
-    resultsSection.hidden = true;
-    resultsGrid.innerHTML = "";
-
-    const response = await fetch(
-        `${NINJA_API}=${encodeURIComponent(currentQuery)}`,
-        {
-            method: "GET",
-            headers: {
-                "X-Api-Key": API_KEY
-            },
-        }
-    );
-
-    try {
-        if (!response.ok) throw new Error(`Erro HTTP! Status: ${response.status}`);
-
-        const data = await response.json();
-        totalResults = data.length ?? 0;
-        // Renderização X animais por página --------------------------------
-        const offset = (currentPage - 1) * PAGE_SIZE;
-        const endLimit = offset + PAGE_SIZE;
-        const animalsPage = data.slice(offset, endLimit);
-
-        if (data.length > 0) {
-            renderResults(animalsPage);
-        } else {
-            showStatus("Nenhum animal encontrado. Tente uma busca diferente.", "info");
-        }
-    } catch (error) {
-        console.error("Erro na requisição: ", error);
-        showStatus(`Algo deu errado na requisição: ${error.message}`, "error");
-    } finally {
-        loader.hidden = true;
-        searchBtn.disabled = false;
-        searchBtn.textContent = "Pesquisar";
-    }
-};
 
 async function getAnimalConservation(animal) {
     const url = await fetch (
@@ -124,28 +49,20 @@ async function getAnimalConservation(animal) {
     return conservation;
 };
 
-async function renderResults(animals) {
-    console.log(animals)
-    resultsTitle.textContent = `Resultados para "${currentQuery}"`;
-    const totalPages = Math.ceil(totalResults / PAGE_SIZE);
-    resultsCount.textContent = `${totalResults} animais encontrados. Página ${currentPage} de ${totalPages}`;
+async function renderFavorites(listFavorites) {
+    console.log(`Lista de favoritos: ${listFavorites}`)
 
-    const cardsPromises = animals.map(createAnimalCard);    // Um array com a chamada de createAnimalCard(animal[0]) e assim por diante...
-    const cards = await Promise.all(cardsPromises);         // Espera as requisições terminarem e me devolve os resultados
+    for(let i = 0; i < localStorage.length; i++){
+        console.log(listFavorites[i])
+    }
+
+    const cardsFavorites = listFavorites.map(createAnimalCard);
+    const cards = await Promise.all(cardsFavorites);
 
     cards.forEach(card => {resultsGrid.appendChild(card);});
 
     resultsSection.hidden = false;
-
-    if (totalPages > 1) {
-        pagination.hidden = false;
-        pageIndicator.textContent = `Página ${currentPage} de ${totalPages}`;
-        btnPrev.disabled = currentPage === 1;
-        btnNext.disabled = currentPage === totalPages;
-    } else {
-        pagination.hidden = true;
-    }
-};
+}
 
 async function createAnimalCard(animal) {
     const name = animal.name || "Name not found";
@@ -175,12 +92,7 @@ async function createAnimalCard(animal) {
 
 // Modal - Abre uma descrição com mais informações do animal
 async function openModal(animal) {
-
-    // Recebe o object animal atual para facilitar a inserção na página de favoritos
     currentAnimal = animal;
-    // Verificando se o animal já está na lista de favoritos
-    // Se sim: Coração vermelho, se clicar tira da lista
-    // Se não: Coração cinza, se clicar adiciona na lista.
     changeFavoriteButton();
     modalOverlay.hidden = false;
     const name = animal.name || "Name not found";
@@ -229,21 +141,14 @@ function verifyFavorite() {
     return { index, listFavorites };
 };
 
-
 function changeFavoriteButton() {
     // Carrega as variáveis chamando a função de verificação
     const { index, listFavorites } = verifyFavorite();
     modalFavorite.textContent = (index !== -1) ? '❤️' : '🤍';
+    closeModal();
 }
 
 function changeFavorite() {
-    //? Pensar melhor nisso aqui para que a pessoa possa desfavoritar dentro da busca tbm.
-    const data = JSON.parse(localStorage.getItem('favorites')) || [];
-    if (data.length == 5){
-        closeModal();
-        showStatus("Lista de favoritos está cheia!", "error");
-        return;
-    }
     // Carrega as variáveis chamando a função de verificação
     const { index, listFavorites } = verifyFavorite();
     if (index !== -1) {
@@ -256,7 +161,8 @@ function changeFavorite() {
     // Insere a nova lista de favoritos no localStorage
     localStorage.setItem('favorites', JSON.stringify(listFavorites));
     // Troca o botão se necessário
-    changeFavoriteButton()
+    changeFavoriteButton();
+    window.location.reload();
 }
 
 function closeModal() {
@@ -275,3 +181,13 @@ function escapeHTML(str) {
     div.appendChild(document.createTextNode(String(str)));
     return div.innerHTML;
 };
+
+// Randeriza os favoritos ao carregar a página
+window.addEventListener("DOMContentLoaded", () => {
+    const data = JSON.parse(localStorage.getItem('favorites')) || [];
+    if (data.length > 0){
+        renderFavorites(data);
+    } else {
+        showStatus("Nenhum animal na lista de favoritos.", "info");
+    }
+});

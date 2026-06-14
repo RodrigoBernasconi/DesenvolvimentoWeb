@@ -14,12 +14,24 @@ const API_KEY = "atB8dgsr9nKBaJHM3xSdxIKzkRF0EAVkXwiCzDez";
 const INATURALIST_API = "https://api.inaturalist.org/v1/taxa?q"
 const PAGE_SIZE = 8;
 
+const STORAGE_KEYS = [
+    "savedAnimal1",
+    "savedAnimal2",
+    "savedAnimal3",
+    "savedAnimal4",
+    "savedAnimal5",
+    "savedAnimal6",
+    "savedAnimal7",
+    "savedAnimal8",
+];
+
 // Estados da aplicação
 let currentAnimal = "";
 let currentQuery = "";
 let currentType = "";
 let currentPage = 1;
 let totalResults = 0;
+let count = 0;
 
 // Buscando no DOM todos os elementos necessários
 const searchForm = document.getElementById("search-form");
@@ -57,7 +69,7 @@ btnNext.addEventListener("click", () => {
     fetchAnimals();
 });
 
-modalFavorite.addEventListener("click", changeFavorite);
+modalFavorite.addEventListener("click", addFavorite);
 
 modalClose.addEventListener("click", closeModal);
 modalOverlay.addEventListener("click", (e) => {
@@ -125,7 +137,6 @@ async function getAnimalConservation(animal) {
 };
 
 async function renderResults(animals) {
-    console.log(animals)
     resultsTitle.textContent = `Resultados para "${currentQuery}"`;
     const totalPages = Math.ceil(totalResults / PAGE_SIZE);
     resultsCount.textContent = `${totalResults} animais encontrados. Página ${currentPage} de ${totalPages}`;
@@ -175,13 +186,7 @@ async function createAnimalCard(animal) {
 
 // Modal - Abre uma descrição com mais informações do animal
 async function openModal(animal) {
-
-    // Recebe o object animal atual para facilitar a inserção na página de favoritos
     currentAnimal = animal;
-    // Verificando se o animal já está na lista de favoritos
-    // Se sim: Coração vermelho, se clicar tira da lista
-    // Se não: Coração cinza, se clicar adiciona na lista.
-    changeFavoriteButton();
     modalOverlay.hidden = false;
     const name = animal.name || "Name not found";
     const scientificName = animal.taxonomy?.scientific_name || "Scientific name not informed";
@@ -219,45 +224,18 @@ async function openModal(animal) {
 }
 
 function verifyFavorite() {
-    // Retorna a lista de favoritos para a checagem
-    const listFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
-    // Verifica se o animal já está presente na lista procurando pelo nome, retorna um index (sim/não)
-    const index = listFavorites.findIndex(animal => animal.name === currentAnimal.name);
-    // Retorna os dois resultados encontrados:
-    // 1. Índice (Sim/Não)
-    // 2. Lista dos favoritos
-    return { index, listFavorites };
+    
 };
 
-
-function changeFavoriteButton() {
-    // Carrega as variáveis chamando a função de verificação
-    const { index, listFavorites } = verifyFavorite();
-    modalFavorite.textContent = (index !== -1) ? '❤️' : '🤍';
-}
-
-function changeFavorite() {
-    //? Pensar melhor nisso aqui para que a pessoa possa desfavoritar dentro da busca tbm.
-    const data = JSON.parse(localStorage.getItem('favorites')) || [];
-    if (data.length == 5){
-        closeModal();
-        showStatus("Lista de favoritos está cheia!", "error");
+function addFavorite() {
+    if (localStorage.length == STORAGE_KEYS.length) {
+        showStatus("Lista de animais favoritos está cheia!", "error");
         return;
     }
-    // Carrega as variáveis chamando a função de verificação
-    const { index, listFavorites } = verifyFavorite();
-    if (index !== -1) {
-        // Remove o animal na lista de favoritos 
-        listFavorites.splice(index, 1);
-    } else {
-        // Adiciona o animal na lista de favoritos 
-        listFavorites.push(currentAnimal);
-    }
-    // Insere a nova lista de favoritos no localStorage
-    localStorage.setItem('favorites', JSON.stringify(listFavorites));
-    // Troca o botão se necessário
-    changeFavoriteButton()
-}
+
+    localStorage.setItem(STORAGE_KEYS[count], JSON.stringify(currentAnimal));
+    count++;
+};
 
 function closeModal() {
     modalOverlay.hidden = true;

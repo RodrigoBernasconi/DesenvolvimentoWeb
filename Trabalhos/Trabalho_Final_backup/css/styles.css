@@ -129,7 +129,6 @@ a {
     border-radius: 4px;
     margin-bottom: 1rem;
     border: 1px solid var(--border);
-    text-align: center;
 }
 
 .status-message.error {
@@ -297,6 +296,10 @@ a {
     font-size: 1.2rem;
     cursor: pointer;
     color: var(--muted);
+}
+
+.modal-favorite:hover {
+    color: #b91c1c;
 }
 
 .modal-close {
