@@ -35,6 +35,7 @@ const btnPrev = document.getElementById("btn-prev");
 const btnNext = document.getElementById("btn-next");
 const pageIndicator = document.getElementById("page-indicator");
 const modalOverlay = document.getElementById("modal-overlay");
+const modalFavorite = document.getElementById("modal-favorite");
 const modalClose = document.getElementById("modal-close");
 const modalBody = document.getElementById("modal-body");
 
@@ -55,6 +56,7 @@ btnNext.addEventListener("click", () => {
     fetchAnimals();
 });
 
+modalFavorite.addEventListener("click", addFavorite);
 modalClose.addEventListener("click", closeModal);
 modalOverlay.addEventListener("click", (e) => {
     if (e.target === modalOverlay) closeModal();

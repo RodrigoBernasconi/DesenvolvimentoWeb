@@ -35,6 +35,8 @@ a {
 
 /* Cabeçalho */
 .site-header {
+    display: flex;
+    justify-content: space-between;
     background: var(--dark-green);
     color: white;
     text-align: center;
@@ -45,6 +47,41 @@ a {
 
 .site-header a {
     color: white;
+}
+
+.title {
+    flex: 4;
+    text-align: left;
+}
+
+.navigator {
+    display: flex;
+}
+
+.navigator ul{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem;
+    flex: 1;
+}
+
+.navigator a {
+    text-decoration: none;
+    font-weight: bold;
+    padding: 0.5rem;
+}
+
+.navigator li {
+    list-style-type: none;
+}
+
+.navigator ul li a.active {
+    font-weight: bold;
+    background: white;
+    color: var(--dark-green);
+    border-radius: 4px;
 }
 
 /* Formulário de busca */
@@ -144,7 +181,6 @@ a {
     gap: 1rem;
 }
 
-/* ! Card do animal */
 .animal-card {
     display: flex;
     flex-direction: column;
@@ -154,7 +190,6 @@ a {
     cursor: pointer;
     overflow: hidden;
     padding: 0.75rem;
-    /* height: 100%; */
 }
 
 .animal-card:hover {
@@ -252,6 +287,21 @@ a {
     position: relative;
 }
 
+.modal-favorite {
+    position: absolute;
+    top: 1rem;
+    left: 1.25rem;
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: var(--muted);
+}
+
+.modal-favorite:hover {
+    color: #b91c1c;
+}
+
 .modal-close {
     position: absolute;
     top: 0.75rem;
@@ -322,3 +372,16 @@ a {
    valor CSS explícito de display (como display:flex) pode sobrescrevê-lo.
    Esta regra garante que [hidden] sempre vença. */
 [hidden] { display: none !important; }
+
+/* Media query */
+@media (max-width: 575px) {
+    .site-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.8rem;
+    }
+
+    .title {
+        text-align: center;
+    }
+}

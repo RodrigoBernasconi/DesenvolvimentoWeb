@@ -15,31 +15,13 @@
         </div>
         <nav class="navigator">
             <ul>
-                <li><a class="active" href="#">Home</a></li>
-                <li><a href="favorite.html">Favorite</a></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a class="active" href="#">Favorite</a></li>
             </ul>
         </nav>
     </header>
-    <!-- Conteúdo principal -->
-    <main class="main-container">
-        <section class="search-section">
-            <!-- Form de busca -->
-            <form id="search-form" role="search" aria-label="Pesquisar animal">
-                <div class="input-row">
-                    <label for="search-input" class="visually-hidden">Pesquisar animais</label>
-                    <input 
-                        id="search-input"
-                        type="text"
-                        placeholder="Pesquise um animal"
-                        autocomplete="off"
-                        required>
-                    
-                    <!-- Botão de busca -->
-                    <button type="submit" id="search-btn">Pesquisar</button>
-                </div>
-            </form>
-        </section>
 
+    <main class="main-container">
         <!-- Mensagem de status / erro -->
         <div id="status-message" class="status-message" role="status" aria-live="polite" hidden></div>
 
@@ -69,7 +51,6 @@
         <!-- Modal de detalhes dos animais -->
         <div id="modal-overlay" class="modal-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="modal-title">
             <div class="modal">
-                <button id="modal-favorite" class="modal-favorite" aria-labelledby="Favoritar animal">&#x2764;</button>
                 <button id="modal-close" class="modal-close" aria-labelledby="Fechar detalhes">X</button>
                 <div id="modal-body" class="modal-body"></div>
             </div>
@@ -83,5 +64,4 @@
         <p>Este trabalho faz uso da API da <a href="https://api-ninjas.com/api/animals" target="_blank">Animals API</a></p>
     </footer>
 </body>
-<script src="js/scripts.js"></script>
 </html>
