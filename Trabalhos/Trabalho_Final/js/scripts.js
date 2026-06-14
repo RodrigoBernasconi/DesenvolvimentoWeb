@@ -15,6 +15,7 @@ const INATURALIST_API = "https://api.inaturalist.org/v1/taxa?q"
 const PAGE_SIZE = 8;
 
 // Estados da aplicação
+let currentAnimal = "";
 let currentQuery = "";
 let currentType = "";
 let currentPage = 1;
@@ -57,6 +58,7 @@ btnNext.addEventListener("click", () => {
 });
 
 modalFavorite.addEventListener("click", addFavorite);
+
 modalClose.addEventListener("click", closeModal);
 modalOverlay.addEventListener("click", (e) => {
     if (e.target === modalOverlay) closeModal();
@@ -174,7 +176,12 @@ async function createAnimalCard(animal) {
 
 // Modal - Abre uma descrição com mais informações do animal
 async function openModal(animal) {
-    console.log("Fui clicado para abrir modal", animal)
+
+    // Verificando se o animal já está na lista de favoritos
+    // Se sim: Coração vermelho, se clicar tira da lista
+    // Se não: Coração cinza, se clicar adiciona nos favoritos.
+
+    currentAnimal = animal;
     modalOverlay.hidden = false;
     const name = animal.name || "Name not found";
     const scientificName = animal.taxonomy?.scientific_name || "Scientific name not informed";
@@ -211,10 +218,18 @@ async function openModal(animal) {
     `;
 }
 
+function verifyFavorite() {
+    
+};
+
+function addFavorite() {
+    localStorage.setItem("favoriteAnimal", JSON.stringify(currentAnimal));
+};
+
 function closeModal() {
     modalOverlay.hidden = true;
     modalBody.innerHTML = "";
-}
+};
 
 function showStatus(message, type) {
     statusMessage.textContent = message;
