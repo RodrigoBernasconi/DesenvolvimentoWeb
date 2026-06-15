@@ -120,12 +120,10 @@ async function getAnimalConservation(animal) {
     const data_animal = await url.json();
     const results = data_animal.results || [];
     const conservation = results[0]?.conservation_status?.status_name ?? "Not informed";
-    console.log(conservation);
     return conservation;
 };
 
 async function renderResults(animals) {
-    console.log(animals)
     resultsTitle.textContent = `Resultados para "${currentQuery}"`;
     const totalPages = Math.ceil(totalResults / PAGE_SIZE);
     resultsCount.textContent = `${totalResults} animais encontrados. Página ${currentPage} de ${totalPages}`;
@@ -175,7 +173,6 @@ async function createAnimalCard(animal) {
 
 // Modal - Abre uma descrição com mais informações do animal
 async function openModal(animal) {
-
     // Recebe o object animal atual para facilitar a inserção na página de favoritos
     currentAnimal = animal;
     // Verificando se o animal já está na lista de favoritos
@@ -237,9 +234,9 @@ function changeFavoriteButton() {
 }
 
 function changeFavorite() {
-    //? Pensar melhor nisso aqui para que a pessoa possa desfavoritar dentro da busca tbm.
     const data = JSON.parse(localStorage.getItem('favorites')) || [];
-    if (data.length == 5){
+    // Limita para o máximo de 8 favoritos AND só vai executar isso se o animal não estiver na lista de favoritos ainda
+    if (data.length == 8 && data.findIndex(animal => animal.name === currentAnimal.name) == -1){
         closeModal();
         showStatus("Lista de favoritos está cheia!", "error");
         return;
