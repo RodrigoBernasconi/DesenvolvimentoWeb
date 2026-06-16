@@ -234,8 +234,11 @@ a {
     border: 1px solid var(--dark-green);
     border-radius: 6px;
     margin-top: auto;
-    text-transform: capitalize;
     padding: 0.35rem 0;
+}
+
+.animal-status::first-letter {
+    text-transform: uppercase;
 }
 
 /* Paginação */
@@ -290,7 +293,7 @@ a {
 
 .modal-favorite {
     position: absolute;
-    top: 1rem;
+    top: 0.75rem;
     left: 1.25rem;
     background: none;
     border: none;

@@ -13,6 +13,7 @@ const NINJA_API = "https://api.api-ninjas.com/v1/animals?name";
 const API_KEY = "atB8dgsr9nKBaJHM3xSdxIKzkRF0EAVkXwiCzDez";
 const INATURALIST_API = "https://api.inaturalist.org/v1/taxa?q"
 const PAGE_SIZE = 8;
+const FAVORITE_KEY = "favorites";
 
 // Estados da aplicação
 let currentAnimal = "";
@@ -119,7 +120,7 @@ async function getAnimalConservation(animal) {
 
     const data_animal = await url.json();
     const results = data_animal.results || [];
-    const conservation = results[0]?.conservation_status?.status_name ?? "Not informed";
+    const conservation = results[0]?.conservation_status?.status_name ?? "Conservation not found";
     return conservation;
 };
 
@@ -182,13 +183,18 @@ async function openModal(animal) {
     modalOverlay.hidden = false;
     const name = animal.name || "Name not found";
     const scientificName = animal.taxonomy?.scientific_name || "Scientific name not informed";
+    // Alimentação
     const diet = animal.characteristics?.diet || "Not informed";
     const prey = animal.characteristics?.prey || "Not informed";
+    // Localização
     const habitat = animal.characteristics?.habitat || "Not informed";
     const location = animal.characteristics?.location || "Not informed";
+    // Características
     const group = animal.characteristics?.group || "Not informed";
     const weight = animal.characteristics?.weight || "Not informed";
     const height = animal.characteristics?.height || "Not informed";
+    const skinType = animal.characteristics?.skin_type || "Not informed";
+    const family = animal.taxonomy?.family || "Not informed"
 
     // Renderizando as informações básicas para resultado de busca
     modalBody.innerHTML = `
@@ -210,6 +216,8 @@ async function openModal(animal) {
             <p class="animal-info"><span>Group:</span> ${escapeHTML(group)}</p>
             <p class="animal-info"><span>Weight:</span> ${escapeHTML(weight)}</p>
             <p class="animal-info"><span>Height:</span> ${escapeHTML(height)}</p>
+            <p class="animal-info"><span>Family:</span> ${escapeHTML(family)}</p>
+            <p class="animal-info"><span>Skin type:</span> ${escapeHTML(skinType)}</p>
         </div>
     </div>
     `;
@@ -217,7 +225,7 @@ async function openModal(animal) {
 
 function verifyFavorite() {
     // Retorna a lista de favoritos para a checagem
-    const listFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    const listFavorites = JSON.parse(localStorage.getItem(FAVORITE_KEY)) || [];
     // Verifica se o animal já está presente na lista procurando pelo nome, retorna um index (sim/não)
     const index = listFavorites.findIndex(animal => animal.name === currentAnimal.name);
     // Retorna os dois resultados encontrados:
@@ -234,9 +242,9 @@ function changeFavoriteButton() {
 }
 
 function changeFavorite() {
-    const data = JSON.parse(localStorage.getItem('favorites')) || [];
-    // Limita para o máximo de 8 favoritos AND só vai executar isso se o animal não estiver na lista de favoritos ainda
-    if (data.length == 8 && data.findIndex(animal => animal.name === currentAnimal.name) == -1){
+    const data = JSON.parse(localStorage.getItem(FAVORITE_KEY)) || [];
+    // Limita para o máximo de 8 favoritos AND só vai executar isso se o animal não estiver na lista de favoritos
+    if (data.length == PAGE_SIZE && data.findIndex(animal => animal.name === currentAnimal.name) == -1){
         closeModal();
         showStatus("Lista de favoritos está cheia!", "error");
         return;
@@ -251,7 +259,7 @@ function changeFavorite() {
         listFavorites.push(currentAnimal);
     }
     // Insere a nova lista de favoritos no localStorage
-    localStorage.setItem('favorites', JSON.stringify(listFavorites));
+    localStorage.setItem(FAVORITE_KEY, JSON.stringify(listFavorites));
     // Troca o botão se necessário
     changeFavoriteButton()
 }
